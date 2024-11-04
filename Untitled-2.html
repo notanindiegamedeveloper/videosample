@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Video Player</title>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #121212; /* Default dark mode background */
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.3s, color 0.3s;
+            position: relative; /* To position buttons */
+        }
+        .light-mode {
+            background-color: #f0f0f0;
+            color: #000000;
+        }
+        input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 300px;
+            margin-bottom: 20px;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        input:focus {
+            background-color: #3700b3;
+            color: #ffffff;
+            outline: none;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #6200ea;
+            color: #ffffff;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #3700b3;
+            transform: scale(1.05);
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        .video-js {
+            margin-top: 20px;
+            width: 640px;
+            height: 360px;
+            border: none;
+        }
+        .settings {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center; /* Align items vertically */
+        }
+        .quality-select {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            cursor: pointer;
+            margin-left: 10px; /* Space between input and quality select */
+            transition: background-color 0.3s;
+            width: 100px; /* Fixed width for consistency */
+        }
+        .quality-select:hover {
+            background-color: #3700b3;
+        }
+        .quality-dropdown {
+            display: none;
+            position: absolute;
+            width: 100px; /* Set a fixed width for the dropdown */
+            background-color: #1e1e1e;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.3s;
+            z-index: 10; /* Ensure dropdown is above other elements */
+        }
+        .quality-dropdown.show {
+            display: block;
+            animation: slideIn 0.5s forwards;
+        }
+        .quality-option {
+            padding: 5px; /* Smaller padding for options */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .quality-option:hover {
+            background-color: #3700b3;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        #modeToggle {
+            position: absolute;
+            top: 20px; /* Adjusted position for the button */
+            right: 20px;
+            background-color: transparent;
+            border: 1px solid #6200ea;
+            color: #6200ea;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            margin: 5px;
+        }
+        #modeToggle:hover {
+            background-color: #6200ea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Universal Video Player</h1>
+    <button id="modeToggle" onclick="toggleMode()">Turn on Light Mode</button>
+    <div class="settings">
+        <input type="text" id="videoUrl" placeholder="Enter video URL (any format)">
+        <div class="quality-select" onclick="toggleDropdown()" id="qualityLabel">Select Quality</div>
+        <div class="quality-dropdown" id="qualityDropdown">
+            <div class="quality-option" onclick="selectQuality('1080p')">1080p</div>
+            <div class="quality-option" onclick="selectQuality('720p')">720p</div>
+            <div class="quality-option" onclick="selectQuality('480p')">480p</div>
+            <div class="quality-option" onclick="selectQuality('360p')">360p</div>
+        </div>
+    </div>
+    <button onclick="launchVideo()">Launch Video</button>
+    
+    <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360">
+        <source id="videoSource" src="" type="">
+        Your browser does not support the video tag.
+    </video>
+    
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script>
+        let lightModeEnabled = false;
+
+        function launchVideo() {
+            const urlInput = document.getElementById('videoUrl').value.trim();
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoSource = document.getElementById('videoSource');
+
+            // Reset video source
+            videoSource.src = '';
+            videoPlayer.load();
+
+            // Set the video source
+            videoSource.src = urlInput;
+            videoSource.type = ''; // Let the browser determine the type
+
+            // Load the new video
+            videoPlayer.load();
+            videoPlayer.play()
+                .then(() => {
+                    console.log("Video is playing");
+                })
+                .catch(error => {
+                    console.error("Error playing video:", error);
+                    alert("Error playing the video. Please check the URL or format.");
+                });
+        }
+
+        function toggleMode() {
+            lightModeEnabled = !lightModeEnabled;
+            document.body.classList.toggle('light-mode');
+            const button = document.getElementById('modeToggle');
+            button.innerText = lightModeEnabled ? "Turn off Light Mode" : "Turn on Light Mode";
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('qualityDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function selectQuality(quality) {
+            const dropdown = document.getElementById('qualityDropdown');
+            dropdown.classList.remove('show');
+            const qualityLabel = document.getElementById('qualityLabel');
+            qualityLabel.innerText = quality; // Update the quality label with the selected quality
+        }
+    </script>
+</body>
+</html>
