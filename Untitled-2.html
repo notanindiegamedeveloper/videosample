@@ -65,6 +65,8 @@
             margin-bottom: 20px;
             display: flex;
             align-items: center; /* Align items vertically */
+            flex-wrap: wrap; /* Allow wrapping for mobile responsiveness */
+            justify-content: center; /* Center items */
         }
         .quality-select {
             padding: 10px;
@@ -75,7 +77,8 @@
             cursor: pointer;
             margin-left: 10px; /* Space between input and quality select */
             transition: background-color 0.3s;
-            width: 100px; /* Fixed width for consistency */
+            position: relative; /* Set position to relative */
+            z-index: 1; /* Ensure quality select is above the dropdown */
         }
         .quality-select:hover {
             background-color: #3700b3;
@@ -88,7 +91,7 @@
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.3s;
-            z-index: 10; /* Ensure dropdown is above other elements */
+            z-index: 0; /* Ensure dropdown is below the quality select */
         }
         .quality-dropdown.show {
             display: block;
@@ -135,6 +138,35 @@
         #modeToggle:hover {
             background-color: #6200ea;
             color: white;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            body {
+                height: auto; /* Allow scrolling on mobile */
+                padding: 20px;
+            }
+            input {
+                width: 100%; /* Full width for input on mobile */
+            }
+            button {
+                width: 100%; /* Full width for buttons on mobile */
+            }
+            .video-js {
+                width: 100%; /* Responsive video player */
+                height: auto; /* Maintain aspect ratio */
+            }
+            .quality-dropdown {
+                width: 80px; /* Adjust dropdown width for mobile */
+            }
+            .settings {
+                flex-direction: column; /* Stack items vertically on mobile */
+                align-items: stretch; /* Stretch to fill available width */
+            }
+            .quality-select {
+                margin-left: 0; /* Remove left margin on mobile */
+                margin-top: 10px; /* Add top margin for spacing */
+            }
         }
     </style>
 </head>
