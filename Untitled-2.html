@@ -18,6 +18,7 @@
             margin: 0;
             transition: background-color 0.3s, color 0.3s;
             position: relative; /* To position buttons */
+            padding: 20px; /* Add padding for spacing */
         }
         .light-mode {
             background-color: #f0f0f0;
@@ -27,7 +28,8 @@
             padding: 10px;
             border: none;
             border-radius: 5px;
-            width: 300px;
+            width: 100%; /* Full width for input */
+            max-width: 400px; /* Max width for larger screens */
             margin-bottom: 20px;
             background-color: #1e1e1e;
             color: #ffffff;
@@ -39,7 +41,7 @@
             outline: none;
         }
         button {
-            padding: 10px 20px;
+            padding: 8px 12px; /* Smaller padding for buttons */
             border: none;
             border-radius: 5px;
             background-color: #6200ea;
@@ -47,6 +49,7 @@
             cursor: pointer;
             transition: transform 0.2s, background-color 0.3s;
             margin: 5px;
+            font-size: 14px; /* Smaller font size for buttons */
         }
         button:hover {
             background-color: #3700b3;
@@ -57,16 +60,16 @@
         }
         .video-js {
             margin-top: 20px;
-            width: 640px;
-            height: 360px;
-            border: none;
+            width: 100%; /* Responsive video player */
+            max-width: 640px; /* Max width for larger screens */
+            height: auto; /* Maintain aspect ratio */
         }
         .settings {
             margin-bottom: 20px;
             display: flex;
-            align-items: center; /* Align items vertically */
-            flex-wrap: wrap; /* Allow wrapping for mobile responsiveness */
-            justify-content: center; /* Center items */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items */
+            width: 100%; /* Full width for settings */
         }
         .quality-select {
             padding: 10px;
@@ -75,10 +78,10 @@
             background-color: #1e1e1e;
             color: #ffffff;
             cursor: pointer;
-            margin-left: 10px; /* Space between input and quality select */
             transition: background-color 0.3s;
-            position: relative; /* Set position to relative */
-            z-index: 1; /* Ensure quality select is above the dropdown */
+            width: 100%; /* Full width for quality select */
+            max-width: 400px; /* Max width for larger screens */
+            text-align: center; /* Center text */
         }
         .quality-select:hover {
             background-color: #3700b3;
@@ -91,7 +94,6 @@
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.3s;
-            z-index: 0; /* Ensure dropdown is below the quality select */
         }
         .quality-dropdown.show {
             display: block;
@@ -125,15 +127,15 @@
         }
         #modeToggle {
             position: absolute;
-            top: 20px; /* Adjusted position for the button */
-            right: 20px;
+            top: 10px; /* Adjusted position for the button */
+            right: 10px;
             background-color: transparent;
             border: 1px solid #6200ea;
             color: #6200ea;
             padding: 5px 10px;
             border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
-            margin: 5px;
+            font-size: 12px; /* Smaller font size for mobile */
         }
         #modeToggle:hover {
             background-color: #6200ea;
@@ -142,36 +144,27 @@
 
         /* Responsive styles */
         @media (max-width: 768px) {
-            body {
-                height: auto; /* Allow scrolling on mobile */
-                padding: 20px;
-            }
             input {
                 width: 100%; /* Full width for input on mobile */
             }
-            button {
-                width: 100%; /* Full width for buttons on mobile */
-            }
             .video-js {
                 width: 100%; /* Responsive video player */
-                height: auto; /* Maintain aspect ratio */
+            }
+            .settings {
+                width: 100%; /* Full width for settings */
+                padding: 10px; /* Add padding */
             }
             .quality-dropdown {
                 width: 80px; /* Adjust dropdown width for mobile */
             }
-            .settings {
-                flex-direction: column; /* Stack items vertically on mobile */
-                align-items: stretch; /* Stretch to fill available width */
-            }
             .quality-select {
-                margin-left: 0; /* Remove left margin on mobile */
-                margin-top: 10px; /* Add top margin for spacing */
+                margin: 10px 0; /* Add margin for spacing */
             }
         }
     </style>
 </head>
 <body>
-    <h1>Universal Video2 Player</h1>
+    <h1>Universal Video Player</h1>
     <button id="modeToggle" onclick="toggleMode()">Turn on Light Mode</button>
     <div class="settings">
         <input type="text" id="videoUrl" placeholder="Enter video URL (any format)">
