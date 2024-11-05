@@ -170,6 +170,8 @@
         .light-mode .small-text {
             color: black; /* Change text color to black in light mode */
         }
+
+        /* Media query for mobile devices */
         @media (max-width: 768px) {
             input {
                 width: 100%;
@@ -180,6 +182,11 @@
             .settings {
                 width: 100%;
                 padding: 10px;
+            }
+
+            /* Lower the modeToggle button 20px when on mobile */
+            #modeToggle {
+                top: 30px; /* Shift the button 20px lower on mobile */
             }
         }
     </style>
