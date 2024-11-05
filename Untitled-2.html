@@ -15,7 +15,7 @@
         }
 
         body {
-            background-image: url('https://pics.craiyon.com/2024-09-09/r3UKLZ66Tt-3Hiol6MEraQ.webp');
+            background-color: black;
             background-size: cover;
             background-repeat: no-repeat;
             color: #ffffff;
@@ -24,29 +24,41 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.3s, color 0.3s, background-image 0.3s;
+            transition: background-color 0.3s ease, color 0.3s ease;
             position: relative;
             padding: 20px;
         }
 
         .light-mode {
-            background-color: #f0f0f0;
+            background-color: #ffffff;
             color: #000000;
-            background-image: url('https://img.freepik.com/premium-photo/purple-white-waves-background-with-white-wave-background_916191-5569.jpg');
         }
 
-        /* Add this rule to change the title color in light mode */
+        /* Change the title color and shadow in light mode */
         .light-mode h1 {
             color: #000000;
+            text-shadow: 6px 6px 15px rgba(0, 0, 0, 0.7); /* Black shadow in light mode */
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 45px;
             margin: 0;
             margin-bottom: 20px;
             color: #ffffff;
             text-align: center;
-            transition: color 0.5s ease; /* Smooth color transition */
+            transition: color 0.5s ease, transform 0.3s ease, text-shadow 0.3s ease; /* Smooth color and shadow transition */
+            text-shadow: 6px 6px 15px rgba(255, 255, 255, 0.5); /* White shadow in dark mode */
+        }
+
+        /* Enlarge title on hover */
+        h1:hover {
+            transform: scale(1.1);
+            text-shadow: 6px 6px 25px rgba(255, 255, 255, 0.8); /* Larger white shadow on hover in dark mode */
+        }
+
+        /* Adjust the shadow dynamically based on the light mode */
+        .light-mode h1:hover {
+            text-shadow: 6px 6px 25px rgba(0, 0, 0, 0.8); /* Larger black shadow on hover in light mode */
         }
 
         input {
@@ -62,7 +74,7 @@
         }
 
         input:focus {
-            background-color: #3700b3;
+            background-color: #6200ea;
             color: #ffffff;
             outline: none;
         }
@@ -83,7 +95,7 @@
         button:hover {
             background-color: #6200ea;
             color: white;
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         button:active {
@@ -93,15 +105,24 @@
         .video-js {
             margin-top: 20px;
             width: 100%;
-            max-width: 900px; /* Increased width */
+            max-width: 900px;
             height: auto;
-            border-radius: 15px; /* Rounded corners */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(255, 255, 255, 0.5); /* White shadow in dark mode */
+            border: 5px solid #6200ea;
             transition: box-shadow 0.3s ease-in-out;
         }
 
         .video-js:hover {
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7); /* Enhanced shadow on hover */
+            box-shadow: 0 30px 80px rgba(255, 255, 255, 0.7); /* Enhanced white shadow on hover in dark mode */
+        }
+
+        .light-mode .video-js {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5); /* Dark shadow in light mode */
+        }
+
+        .light-mode .video-js:hover {
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7); /* Enhanced dark shadow on hover in light mode */
         }
 
         .settings {
@@ -120,7 +141,7 @@
             color: #6200ea;
             padding: 5px 10px;
             border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
+            transition: transform 0.2s, background-color 0.3s, color 0.3s;
             font-size: 14px;
             font-family: 'Playfair Display', serif;
         }
@@ -128,13 +149,18 @@
         #modeToggle:hover {
             background-color: #6200ea;
             color: white;
+            transform: scale(1.1);
+        }
+
+        #modeToggle:active {
+            transform: scale(0.95);
         }
 
         .small-text {
             position: absolute;
             bottom: 40px;
             left: 10px;
-            font-size: 12px;
+            font-size: 8px;
             color: #ffffff;
             font-family: 'Roboto Slab', serif;
             text-align: left;
@@ -193,16 +219,13 @@
                 })
                 .catch(error => {
                     console.error("Error playing video:", error);
-                    alert("Error playing the video. Please check the URL or format.");
+                    alert("URL or format not supported by our awesome website!");
                 });
         }
 
         function toggleMode() {
             lightModeEnabled = !lightModeEnabled;
             document.body.classList.toggle('light-mode');
-
-            const smallText = document.querySelector('.small-text');
-            smallText.style.color = lightModeEnabled ? 'black' : 'white'; // Change color directly
 
             const button = document.getElementById('modeToggle');
             button.innerText = lightModeEnabled ? "Turn off Light Mode" : "Turn on Light Mode";
