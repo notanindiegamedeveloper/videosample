@@ -107,9 +107,9 @@
             width: 100%;
             max-width: 900px;
             height: auto;
-            border-radius: 15px;
+            border-radius: 20px;
             box-shadow: 0 15px 50px rgba(255, 255, 255, 0.5); /* White shadow in dark mode */
-            border: 5px solid #6200ea;
+            border: 2.6px solid #6200ea;
             transition: box-shadow 0.3s ease-in-out;
         }
 
@@ -170,7 +170,6 @@
         .light-mode .small-text {
             color: black; /* Change text color to black in light mode */
         }
-
         @media (max-width: 768px) {
             input {
                 width: 100%;
@@ -204,6 +203,22 @@
     <script>
         let lightModeEnabled = false;
 
+        // Check for mobile devices and adjust styles accordingly
+        function adjustForMobile() {
+            if (window.innerWidth <= 768) {
+                const videoElement = document.querySelector('.video-js');
+                const h1Element = document.querySelector('h1');
+
+                // Lessen the shadow for the video and h1 text on mobile
+                videoElement.style.boxShadow = '0 8px 20px rgba(255, 255, 255, 0.3)';
+                if (document.body.classList.contains('light-mode')) {
+                    videoElement.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
+                }
+                h1Element.style.fontSize = '30px'; // Reduce the font size by 8px
+            }
+        }
+
+        // Launch video function
         function launchVideo() {
             const urlInput = document.getElementById('videoUrl').value.trim();
             const videoPlayer = document.getElementById('videoPlayer');
@@ -223,6 +238,7 @@
                 });
         }
 
+        // Toggle light/dark mode
         function toggleMode() {
             lightModeEnabled = !lightModeEnabled;
             document.body.classList.toggle('light-mode');
@@ -230,6 +246,10 @@
             const button = document.getElementById('modeToggle');
             button.innerText = lightModeEnabled ? "Turn off Light Mode" : "Turn on Light Mode";
         }
+
+        // Adjust for mobile on initial load and window resize
+        window.addEventListener('resize', adjustForMobile);
+        adjustForMobile();  // Initial adjustment on load
     </script>
 </body>
 </html>
