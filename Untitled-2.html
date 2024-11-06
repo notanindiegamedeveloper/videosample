@@ -124,6 +124,11 @@
         .light-mode .video-js:hover {
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7); /* Enhanced dark shadow on hover in light mode */
         }
+        .fullscreen-no-border {
+            border: none;
+            box-shadow: none;
+        }
+
 
         .settings {
             margin-bottom: 20px;
@@ -135,7 +140,7 @@
 
         #modeToggle {
             position: absolute;
-            top: 10px;
+            top: 20px;
             right: 10px;
             background-color: transparent;
             color: #6200ea;
@@ -257,6 +262,18 @@
         // Adjust for mobile on initial load and window resize
         window.addEventListener('resize', adjustForMobile);
         adjustForMobile();  // Initial adjustment on load
+        const videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.addEventListener('fullscreenchange', toggleFullscreenBorder);
+        videoPlayer.addEventListener('webkitfullscreenchange', toggleFullscreenBorder); // For Safari support
+
+        function toggleFullscreenBorder() {
+            if (document.fullscreenElement || document.webkitFullscreenElement) {
+                videoPlayer.classList.add('fullscreen-no-border');
+            } else {
+                videoPlayer.classList.remove('fullscreen-no-border');
+            }
+        }
+
     </script>
 </body>
 </html>
