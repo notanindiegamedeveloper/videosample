@@ -7,7 +7,7 @@
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
     <style>
-        /* Disable scrolling */
+
         html, body {
             overflow: hidden;
             height: 100%;
@@ -34,10 +34,10 @@
             color: #000000;
         }
 
-        /* Change the title color and shadow in light mode */
+
         .light-mode h1 {
             color: #000000;
-            text-shadow: 6px 6px 15px rgba(0, 0, 0, 0.7); /* Black shadow in light mode */
+            text-shadow: 6px 6px 15px rgba(0, 0, 0, 0.7); 
         }
 
         h1 {
@@ -46,19 +46,19 @@
             margin-bottom: 20px;
             color: #ffffff;
             text-align: center;
-            transition: color 0.5s ease, transform 0.3s ease, text-shadow 0.3s ease; /* Smooth color and shadow transition */
-            text-shadow: 6px 6px 15px rgba(255, 255, 255, 0.5); /* White shadow in dark mode */
+            transition: color 0.5s ease, transform 0.3s ease, text-shadow 0.3s ease; 
+            text-shadow: 6px 6px 15px rgba(255, 255, 255, 0.5); 
         }
 
-        /* Enlarge title on hover */
+
         h1:hover {
             transform: scale(1.1);
-            text-shadow: 6px 6px 25px rgba(255, 255, 255, 0.8); /* Larger white shadow on hover in dark mode */
+            text-shadow: 6px 6px 25px rgba(255, 255, 255, 0.8); 
         }
 
-        /* Adjust the shadow dynamically based on the light mode */
+
         .light-mode h1:hover {
-            text-shadow: 6px 6px 25px rgba(0, 0, 0, 0.8); /* Larger black shadow on hover in light mode */
+            text-shadow: 6px 6px 25px rgba(0, 0, 0, 0.8); 
         }
 
         input {
@@ -108,21 +108,21 @@
             max-width: 900px;
             height: auto;
             border-radius: 20px;
-            box-shadow: 0 15px 50px rgba(255, 255, 255, 0.5); /* White shadow in dark mode */
+            box-shadow: 0 15px 50px rgba(255, 255, 255, 0.5); 
             border: 2.6px solid #6200ea;
             transition: box-shadow 0.3s ease-in-out;
         }
 
         .video-js:hover {
-            box-shadow: 0 30px 80px rgba(255, 255, 255, 0.7); /* Enhanced white shadow on hover in dark mode */
+            box-shadow: 0 30px 80px rgba(255, 255, 255, 0.7); 
         }
 
         .light-mode .video-js {
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5); /* Dark shadow in light mode */
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5); 
         }
 
         .light-mode .video-js:hover {
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7); /* Enhanced dark shadow on hover in light mode */
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7); 
         }
         .fullscreen-no-border {
             border: none;
@@ -173,10 +173,10 @@
         }
 
         .light-mode .small-text {
-            color: black; /* Change text color to black in light mode */
+            color: black; 
         }
 
-        /* Media query for mobile devices */
+
         @media (max-width: 768px) {
             input {
                 width: 100%;
@@ -189,9 +189,9 @@
                 padding: 10px;
             }
 
-            /* Lower the modeToggle button 20px when on mobile */
+
             #modeToggle {
-                top: 30px; /* Shift the button 20px lower on mobile */
+                top: 30px; 
             }
         }
     </style>
@@ -215,22 +215,20 @@
     <script>
         let lightModeEnabled = false;
 
-        // Check for mobile devices and adjust styles accordingly
         function adjustForMobile() {
             if (window.innerWidth <= 768) {
                 const videoElement = document.querySelector('.video-js');
                 const h1Element = document.querySelector('h1');
 
-                // Lessen the shadow for the video and h1 text on mobile
+
                 videoElement.style.boxShadow = '0 8px 20px rgba(255, 255, 255, 0.3)';
                 if (document.body.classList.contains('light-mode')) {
                     videoElement.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
                 }
-                h1Element.style.fontSize = '30px'; // Reduce the font size by 8px
+                h1Element.style.fontSize = '30px'; 
             }
         }
 
-        // Launch video function
         function launchVideo() {
             const urlInput = document.getElementById('videoUrl').value.trim();
             const videoPlayer = document.getElementById('videoPlayer');
@@ -250,7 +248,6 @@
                 });
         }
 
-        // Toggle light/dark mode
         function toggleMode() {
             lightModeEnabled = !lightModeEnabled;
             document.body.classList.toggle('light-mode');
@@ -259,12 +256,11 @@
             button.innerText = lightModeEnabled ? "Turn off Light Mode" : "Turn on Light Mode";
         }
 
-        // Adjust for mobile on initial load and window resize
         window.addEventListener('resize', adjustForMobile);
-        adjustForMobile();  // Initial adjustment on load
+        adjustForMobile(); 
         const videoPlayer = document.getElementById('videoPlayer');
         videoPlayer.addEventListener('fullscreenchange', toggleFullscreenBorder);
-        videoPlayer.addEventListener('webkitfullscreenchange', toggleFullscreenBorder); // For Safari support
+        videoPlayer.addEventListener('webkitfullscreenchange', toggleFullscreenBorder); 
 
         function toggleFullscreenBorder() {
             if (document.fullscreenElement || document.webkitFullscreenElement) {
